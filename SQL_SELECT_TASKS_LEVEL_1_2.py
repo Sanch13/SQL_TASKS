@@ -70,10 +70,21 @@ Printer(code, model, color, type, price)
 # FROM PC
 # WHERE price < 600 AND (cd = '12x' OR cd = '24x')
 ##################################################################################################
-
-
-
-
-
+"""Задание: 6 Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не
+менее 10 Гбайт, найти скорости таких ПК-блокнотов. Вывод: производитель, скорость."""
+# SELECT DISTINCT Product.maker, speed
+# FROM Product, Laptop
+# WHERE Product.type = 'Laptop' AND Laptop.hd >= 10 AND Product.model = Laptop.model
+#       решение через JOIN
+# SELECT DISTINCT Product.maker, Laptop.speed
+# FROM Product
+# JOIN Laptop ON Product.model = Laptop.model
+# WHERE Laptop.hd >= 10
+#       без использования AS
+# SELECT DISTINCT p.maker, l.speed
+# FROM Product p
+# JOIN Laptop l ON p.model = l.model
+# WHERE l.hd >= 10
+##################################################################################################
 
 
