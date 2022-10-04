@@ -86,5 +86,28 @@ Printer(code, model, color, type, price)
 # JOIN Laptop l ON p.model = l.model
 # WHERE l.hd >= 10
 ##################################################################################################
+"""Задание: 7 Найдите номера моделей и цены всех продуктов (любого типа), выпущенных 
+производителем B (латинская буква)."""
+# SELECT DISTINCT Product.model, PC.price
+# FROM Product JOIN PC ON Product.model = PC.model
+# WHERE Product.maker = 'B'
+# UNION
+# SELECT DISTINCT Product.model, Laptop.price
+# FROM Product JOIN Laptop ON Product.model = Laptop.model
+# WHERE Product.maker = 'B'
+# UNION
+# SELECT DISTINCT Product.model, Printer.price
+# FROM Product JOIN Printer ON Product.model = Printer.model
+# WHERE Product.maker = 'B'
+##################################################################################################
+
+
+
+
+
+
+
+
+
 
 
