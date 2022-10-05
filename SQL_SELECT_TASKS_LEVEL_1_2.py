@@ -100,6 +100,26 @@ Printer(code, model, color, type, price)
 # FROM Product JOIN Printer ON Product.model = Printer.model
 # WHERE Product.maker = 'B'
 ##################################################################################################
+"""Задание: 8 Найдите производителя, выпускающего ПК, но не ПК-блокноты."""
+# SELECT DISTINCT maker
+# FROM Product
+# WHERE type = 'PC'
+# EXCEPT
+# SELECT DISTINCT maker
+# FROM Product
+# WHERE type = 'Laptop'
+##################################################################################################
+"""Задание: 9 Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker"""
+# SELECT DISTINCT maker
+# FROM Product JOIN PC ON Product.model = PC.model
+# WHERE PC.speed >= 450
+##################################################################################################
+"""Задание: 10 Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price"""
+# SELECT model, price
+# FROM Printer
+# WHERE price = (SELECT MAX(price) FROM Printer)
+##################################################################################################
+
 
 
 
