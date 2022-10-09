@@ -148,10 +148,24 @@ Printer(code, model, color, type, price)
 """Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается
 только один раз, т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с 
 меньшим номером, скорость и RAM."""
-
-
-
-
+# SELECT DISTINCT i.model, j.model, i.speed, i.ram
+# FROM PC i, PC j
+# WHERE i.speed = j.speed AND i.ram = j.ram AND i.model > j.model
+##################################################################################################
+"""Задание: 17 Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
+Вывести: type, model, speed"""
+# SELECT DISTINCT type, Laptop.model, Laptop.speed
+# FROM Product JOIN Laptop ON  Product.model = Laptop.model
+# WHERE Laptop.speed < ALL (SELECT PC.speed FROM PC)
+##################################################################################################
+"""Задание: 18 Найдите производителей самых дешевых цветных принтеров. Вывести: maker, price"""
+# SELECT DISTINCT Product.maker, Printer.price
+# FROM Product JOIN Printer ON Product.model = Printer.model
+# WHERE Printer.color= 'y' AND Printer.price =
+# (SELECT MIN(price) FROM Printer WHERE  Printer.color= 'y')
+##################################################################################################
+"""Задание: 19 Для каждого производителя, имеющего модели в таблице Laptop, найдите средний размер 
+экрана выпускаемых им ПК-блокнотов. Вывести: maker, средний размер экрана (avg_screen)."""
 
 
 
