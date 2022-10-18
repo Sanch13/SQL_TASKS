@@ -193,9 +193,62 @@ Printer(code, model, color, type, price)
 ##################################################################################################
 """Задание: 23 Найдите производителей, которые производили бы как ПК со скоростью не менее 
 750 МГц, так и ПК-блокноты со скоростью не менее 750 МГц. Вывести: Maker"""
+# SELECT maker
+# FROM Product JOIN PC ON Product.model = PC.model
+# WHERE PC.speed >= 750
+# INTERSECT     # пересечение производителей (maker) из 1 и 2 таблицы
+# SELECT maker
+# FROM Product JOIN Laptop ON Product.model = Laptop.model
+# WHERE Laptop.speed >= 750
+##################################################################################################
+"""Задание: 24 Перечислите номера моделей любых типов, имеющих самую высокую цену по всей имеющейся
+в базе данных продукции."""
+# WITH model_price_union AS                     # создаем модель представления model_price_union
+#      (SELECT model, price FROM pc             # Объеденяем данные столбцов model, price из pc
+#      UNION                                    # Laptop, Printer
+#      SELECT model, price  FROM Laptop
+#      UNION
+#      SELECT model, price  FROM Printer)
+#
+# SELECT model                                  # Выводим самую дорогую model из model_price_union
+# FROM model_price_union
+# WHERE price = (SELECT MAX(price) FROM model_price_union)  # вытягивем самую дорогую стоимость
+                                                            # MAX(price) из model_price_union
+##################################################################################################
+"""Задание: 25 Найдите производителей принтеров, которые производят ПК с самым быстрым 
+процессором среди всех ПК, имеющих наименьший объем RAM. Вывести: Maker"""
+# SELECT DISTINCT maker                             # Выводим уникальных производителей
+# FROM Product p JOIN PC pc ON p.model = pc.model   # Объед. две таблицы (Product, PC) по ключу
+""" производитель входит в перечень производителей принтера ?"""
+# WHERE maker IN (SELECT maker FROM Product WHERE type = 'Printer')
+""" И максимальная скорость у ram с минимальным объемом памяти"""
+# AND speed = (SELECT MAX(speed) FROM PC WHERE ram = (SELECT MIN(ram) FROM PC))
+""" И с минимальным объемом памяти"""
+# AND ram = (SELECT MIN(ram) FROM PC)
+##################################################################################################
+"""Задание: 26 Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем 
+A (латинская буква). Вывести: одна общая средняя цена."""
+# SELECT SUM(price)/count(quantity) AS avg_price
+# FROM (SELECT price, Product.model as quantity
+#       FROM PC JOIN Product ON PC.model = Product.model
+#       WHERE Product.maker = 'A'
+#       UNION ALL
+#       SELECT price, Product.model as quantity
+#       FROM Laptop JOIN Product ON Laptop.model = Product.model
+#       WHERE Product.maker = 'A') as table_price_quantity
+"""Выводим среднюю цену (суммируем все цены и делим на количество вещей)
+Из as price. 
+"""
 
-
-
-
-
+# WITH model_price_quantity_parts AS
+#      (SELECT price, Product.model as quantity
+#       FROM PC JOIN Product ON PC.model = Product.model
+#       WHERE Product.maker = 'A'
+#       UNION ALL
+#       SELECT price, Product.model as quantity
+#       FROM Laptop JOIN Product ON Laptop.model = Product.model
+#       WHERE Product.maker = 'A')
+#
+# SELECT SUM(price)/count(quantity) AS avg_price
+# FROM  model_price_quantity_parts
 
