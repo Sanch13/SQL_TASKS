@@ -228,6 +228,8 @@ Printer(code, model, color, type, price)
 ##################################################################################################
 """Задание: 26 Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем 
 A (латинская буква). Вывести: одна общая средняя цена."""
+
+"""                     The first way                               """
 # SELECT SUM(price)/count(quantity) AS avg_price
 # FROM (SELECT price, Product.model as quantity
 #       FROM PC JOIN Product ON PC.model = Product.model
@@ -237,18 +239,26 @@ A (латинская буква). Вывести: одна общая сред�
 #       FROM Laptop JOIN Product ON Laptop.model = Product.model
 #       WHERE Product.maker = 'A') as table_price_quantity
 """Выводим среднюю цену (суммируем все цены и делим на количество вещей)
-Из as price. 
-"""
+Из as table_price_quantity выбираем колонки  price, Product.model as quantity от производителя А 
+компьютеров и объеденяем с колонками price, Product.model as quantity от производителя А ноутбуков
+Далее суммируем все цены и делим на количество вещей. Результат выводим"""
 
-# WITH model_price_quantity_parts AS
-#      (SELECT price, Product.model as quantity
+"""                     The second way                               """
+# WITH price_model AS
+#      (SELECT price, Product.model as model
 #       FROM PC JOIN Product ON PC.model = Product.model
 #       WHERE Product.maker = 'A'
 #       UNION ALL
-#       SELECT price, Product.model as quantity
+#       SELECT price, Product.model as model
 #       FROM Laptop JOIN Product ON Laptop.model = Product.model
 #       WHERE Product.maker = 'A')
 #
-# SELECT SUM(price)/count(quantity) AS avg_price
-# FROM  model_price_quantity_parts
+# SELECT SUM(price)/count(model) AS avg_price
+# FROM price_model
+"""Сначала создаем модель представления model_prices. Это таблица с колонками 
+price, model. price - это цены, model - это модели вещей. Далее обращаемся к нашему представлению 
+(таблица). Суммируем наши цены и делим на количество моделей."""
+##################################################################################################
+"""Задание: 27 Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и 
+принтеры. Вывести: maker, средний размер HD."""
 
